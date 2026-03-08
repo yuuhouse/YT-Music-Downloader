@@ -1,5 +1,6 @@
 ﻿import os
 import re
+import shutil
 from urllib.parse import parse_qs, urlparse
 
 import yt_dlp
@@ -39,12 +40,15 @@ def validate_youtube_url(url):
     host = parsed.netloc.lower()
     path = parsed.path.strip("/")
 
-    if "youtu.be" in host:
+    is_short_host = host == "youtu.be" or host.endswith(".youtu.be")
+    is_youtube_host = host == "youtube.com" or host.endswith(".youtube.com")
+
+    if is_short_host:
         if not path:
             return False, "錯誤: YouTube 短網址缺少影片 ID"
         return True, ""
 
-    if "youtube.com" in host or "m.youtube.com" in host:
+    if is_youtube_host:
         query = parse_qs(parsed.query)
         vid = query.get("v", [""])[0].strip()
         if parsed.path == "/watch" and not vid:
@@ -86,15 +90,15 @@ def download_youtube_music(
             status_callback(message)
         return {"success": False, "error": "invalid_url"}
 
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-
     def emit(message):
         print(message)
         if status_callback:
             status_callback(message)
 
     try:
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+
         metadata_opts = {
             "format": "bestaudio[acodec=opus]/bestaudio/best" if prefer_opus else "bestaudio/best",
             "quiet": True,
@@ -114,6 +118,10 @@ def download_youtube_music(
         if codec is None and not keep_original:
             codec = "mp3"
         if codec in ("mp3", "flac"):
+            if shutil.which("ffmpeg") is None:
+                emit("錯誤: 找不到 ffmpeg，無法轉檔。請先安裝 ffmpeg 後再試。")
+                return {"success": False, "error": "missing_ffmpeg"}
+
             postprocessor = {
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": codec,
@@ -154,6 +162,9 @@ if __name__ == "__main__":
         "模式 1=原始最佳音質, 2=轉 MP3 320kbps(預設), 3=優先 Opus + 顯示實際音訊資訊, 4=轉 FLAC [Enter=2]: "
     ).strip()
     if mode == "":
+        mode = "2"
+    if mode not in {"1", "2", "3", "4"}:
+        print("警告: 無效模式，已改用預設模式 2 (MP3 320kbps)。")
         mode = "2"
 
     if mode == "2":

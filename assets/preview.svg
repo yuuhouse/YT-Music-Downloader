@@ -1,42 +1,53 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="YTDL Music Downloader preview">
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="YTDL Music Downloader latest GUI preview">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0b1020" />
-      <stop offset="100%" stop-color="#1a2a4a" />
+      <stop offset="0%" stop-color="#07112B" />
+      <stop offset="100%" stop-color="#1D2F54" />
     </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#ff4d4d" />
-      <stop offset="100%" stop-color="#ff9f43" />
+    <linearGradient id="btn" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF5757" />
+      <stop offset="100%" stop-color="#F89B3D" />
     </linearGradient>
   </defs>
 
   <rect width="1200" height="630" fill="url(#bg)" />
-  <rect x="80" y="90" width="1040" height="450" rx="24" fill="#10182d" stroke="#2a3d66" stroke-width="2" />
+  <rect x="70" y="85" width="1060" height="460" rx="24" fill="#0C1938" stroke="#2B4D86" stroke-width="2" />
 
-  <text x="130" y="185" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="54" font-weight="700">
+  <text x="120" y="180" fill="#F3F7FF" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="700">
     YTDL Music Downloader
   </text>
-  <text x="130" y="235" fill="#9fb3d9" font-family="Segoe UI, Arial, sans-serif" font-size="28">
-    Best audio • MP3 320 • Opus info • Auto rename
+  <text x="120" y="230" fill="#8DB2EB" font-family="Segoe UI, Arial, sans-serif" font-size="28">
+    Best audio • MP3 320 • Opus info • FLAC • Auto rename
   </text>
 
-  <rect x="130" y="290" width="580" height="64" rx="12" fill="#0d1427" stroke="#324c7a" />
-  <text x="158" y="333" fill="#c4d3ee" font-family="Consolas, monospace" font-size="24">
-    python yt_music_dl.py
+  <rect x="120" y="286" width="590" height="66" rx="12" fill="#071230" stroke="#2E5A9B" />
+  <text x="150" y="330" fill="#DCEBFF" font-family="Consolas, monospace" font-size="24">
+    https://www.youtube.com/watch?v=
   </text>
 
-  <rect x="130" y="390" width="280" height="68" rx="14" fill="url(#accent)" />
-  <text x="186" y="434" fill="#1a1020" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700">
+  <rect x="120" y="390" width="350" height="74" rx="18" fill="url(#btn)" />
+  <text x="178" y="437" fill="#08122A" font-family="Segoe UI, Arial, sans-serif" font-size="46" font-weight="700">
     Download
   </text>
 
-  <g transform="translate(780,250)">
-    <circle cx="150" cy="70" r="70" fill="#1d2f55" />
-    <polygon points="125,35 125,105 190,70" fill="#ffffff" />
-    <rect x="35" y="170" width="230" height="20" rx="10" fill="#2b416d" />
-    <rect x="35" y="170" width="170" height="20" rx="10" fill="#ff7a59" />
-    <text x="35" y="220" fill="#aac1ea" font-family="Segoe UI, Arial, sans-serif" font-size="22">
-      downloads/
-    </text>
+  <text x="120" y="505" fill="#8DB2EB" font-family="Segoe UI, Arial, sans-serif" font-size="20">Ready</text>
+  <text x="120" y="535" fill="#9FC1F2" font-family="Consolas, monospace" font-size="18">音訊資訊: codec=opus ext=webm abr=160 kbps</text>
+
+  <g transform="translate(785,230)">
+    <circle cx="145" cy="95" r="85" fill="#213C73" />
+    <polygon points="120,64 120,126 174,95" fill="#F4F8FF" />
+
+    <rect x="30" y="200" width="245" height="20" rx="10" fill="#2B487E" />
+    <rect x="30" y="200" width="172" height="20" rx="10" fill="#FF7A59" />
+    <text x="30" y="250" fill="#9FC1F2" font-family="Segoe UI, Arial, sans-serif" font-size="34">downloads/</text>
+
+    <rect x="30" y="278" width="66" height="30" rx="8" fill="#112142" />
+    <rect x="106" y="278" width="96" height="30" rx="8" fill="#2F5FB0" />
+    <rect x="212" y="278" width="66" height="30" rx="8" fill="#112142" />
+    <rect x="288" y="278" width="66" height="30" rx="8" fill="#112142" />
+    <text x="49" y="299" fill="#A8C4F1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Best</text>
+    <text x="130" y="299" fill="#F2F6FF" font-family="Segoe UI, Arial, sans-serif" font-size="16">MP3 320</text>
+    <text x="227" y="299" fill="#A8C4F1" font-family="Segoe UI, Arial, sans-serif" font-size="16">Opus</text>
+    <text x="304" y="299" fill="#A8C4F1" font-family="Segoe UI, Arial, sans-serif" font-size="16">FLAC</text>
   </g>
 </svg>
