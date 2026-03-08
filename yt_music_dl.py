@@ -1,5 +1,6 @@
 ﻿import os
 import re
+from urllib.parse import parse_qs, urlparse
 
 import yt_dlp
 
@@ -29,6 +30,31 @@ def get_unique_basename(output_path, base_name):
         counter += 1
 
 
+def validate_youtube_url(url):
+    """檢查 URL 是否包含可用的 YouTube 影片 ID。"""
+    if not url or not url.strip():
+        return False, "錯誤: 請輸入 YouTube URL"
+
+    parsed = urlparse(url.strip())
+    host = parsed.netloc.lower()
+    path = parsed.path.strip("/")
+
+    if "youtu.be" in host:
+        if not path:
+            return False, "錯誤: YouTube 短網址缺少影片 ID"
+        return True, ""
+
+    if "youtube.com" in host or "m.youtube.com" in host:
+        query = parse_qs(parsed.query)
+        vid = query.get("v", [""])[0].strip()
+        if parsed.path == "/watch" and not vid:
+            return False, "錯誤: 你輸入的是空的 watch URL，缺少影片 ID"
+        return True, ""
+
+    # 非 YouTube 網址交給 yt-dlp 嘗試，避免過度擋掉可用來源。
+    return True, ""
+
+
 def download_youtube_music(
     url,
     output_path="downloads",
@@ -37,6 +63,7 @@ def download_youtube_music(
     prefer_opus=False,
     show_audio_info=False,
     status_callback=None,
+    output_codec=None,
 ):
     """
     下載 YouTube 音訊
@@ -49,7 +76,16 @@ def download_youtube_music(
         prefer_opus: True 時優先抓 Opus 音軌
         show_audio_info: 下載後顯示實際音訊格式資訊
         status_callback: 可選，接收狀態訊息的函式
+        output_codec: 轉檔格式，可為 "mp3" 或 "flac"，None 則保留原始音訊
     """
+    is_valid, error_message = validate_youtube_url(url)
+    if not is_valid:
+        message = error_message
+        print(message)
+        if status_callback:
+            status_callback(message)
+        return {"success": False, "error": "invalid_url"}
+
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
@@ -74,14 +110,17 @@ def download_youtube_music(
             "outtmpl": os.path.join(output_path, f"{unique_title}.%(ext)s"),
         }
 
-        if not keep_original:
-            ydl_opts["postprocessors"] = [
-                {
-                    "key": "FFmpegExtractAudio",
-                    "preferredcodec": "mp3",
-                    "preferredquality": mp3_quality,
-                }
-            ]
+        codec = output_codec
+        if codec is None and not keep_original:
+            codec = "mp3"
+        if codec in ("mp3", "flac"):
+            postprocessor = {
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": codec,
+            }
+            if codec == "mp3":
+                postprocessor["preferredquality"] = mp3_quality
+            ydl_opts["postprocessors"] = [postprocessor]
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             emit(f"正在下載: {url}")
@@ -106,15 +145,22 @@ def download_youtube_music(
 
 if __name__ == "__main__":
     url = input("請輸入 YouTube URL: ").strip()
+    is_valid, error_message = validate_youtube_url(url)
+    if not is_valid:
+        print(error_message)
+        raise SystemExit(1)
+
     mode = input(
-        "模式 1=原始最佳音質, 2=轉 MP3 320kbps(預設), 3=優先 Opus + 顯示實際音訊資訊 [Enter=2]: "
+        "模式 1=原始最佳音質, 2=轉 MP3 320kbps(預設), 3=優先 Opus + 顯示實際音訊資訊, 4=轉 FLAC [Enter=2]: "
     ).strip()
     if mode == "":
         mode = "2"
 
     if mode == "2":
-        download_youtube_music(url, keep_original=False, mp3_quality="320")
+        download_youtube_music(url, keep_original=False, mp3_quality="320", output_codec="mp3")
     elif mode == "3":
         download_youtube_music(url, keep_original=True, prefer_opus=True, show_audio_info=True)
+    elif mode == "4":
+        download_youtube_music(url, keep_original=False, output_codec="flac", show_audio_info=True)
     else:
         download_youtube_music(url, keep_original=True)
