@@ -1,0 +1,27 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Terminal screenshot">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c1222"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect x="60" y="50" width="1160" height="620" rx="14" fill="#0b1020" stroke="#2b3550"/>
+  <rect x="60" y="50" width="1160" height="42" rx="14" fill="#151f36"/>
+  <circle cx="88" cy="71" r="6" fill="#ff5f56"/>
+  <circle cx="108" cy="71" r="6" fill="#ffbd2e"/>
+  <circle cx="128" cy="71" r="6" fill="#27c93f"/>
+  <text x="160" y="77" fill="#c8d4f0" font-family="Consolas, monospace" font-size="18">PowerShell - yt_music_dl.py</text>
+
+  <g font-family="Consolas, monospace" font-size="26" fill="#d6e2ff">
+    <text x="90" y="145">PS D:\Coding\YTDL&gt; python yt_music_dl.py</text>
+    <text x="90" y="195">請輸入 YouTube URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ</text>
+    <text x="90" y="245">模式 1=原始最佳音質(推薦), 2=轉 MP3 320kbps, 3=優先 Opus + 顯示實際音訊資訊: 3</text>
+    <text x="90" y="300" fill="#7dd3fc">正在下載: https://www.youtube.com/watch?v=dQw4w9WgXcQ</text>
+    <text x="90" y="350" fill="#93c5fd">[youtube] Extracting URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ</text>
+    <text x="90" y="400" fill="#93c5fd">[download] Destination: downloads\Rick Astley - Never Gonna Give You Up.webm</text>
+    <text x="90" y="450" fill="#34d399">音訊資訊: codec=opus, ext=webm, abr=160 kbps</text>
+    <text x="90" y="500" fill="#4ade80">下載完成！檔名: Rick Astley - Never Gonna Give You Up</text>
+    <text x="90" y="560">PS D:\Coding\YTDL&gt;</text>
+  </g>
+</svg>
