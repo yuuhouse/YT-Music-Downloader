@@ -36,6 +36,7 @@ def download_youtube_music(
     mp3_quality="320",
     prefer_opus=False,
     show_audio_info=False,
+    status_callback=None,
 ):
     """
     下載 YouTube 音訊
@@ -47,9 +48,15 @@ def download_youtube_music(
         mp3_quality: 轉 mp3 時的碼率 (例如 320 / 256 / 192)
         prefer_opus: True 時優先抓 Opus 音軌
         show_audio_info: 下載後顯示實際音訊格式資訊
+        status_callback: 可選，接收狀態訊息的函式
     """
     if not os.path.exists(output_path):
         os.makedirs(output_path)
+
+    def emit(message):
+        print(message)
+        if status_callback:
+            status_callback(message)
 
     try:
         metadata_opts = {
@@ -77,25 +84,33 @@ def download_youtube_music(
             ]
 
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            print(f"正在下載: {url}")
+            emit(f"正在下載: {url}")
             info = ydl.extract_info(url, download=True)
+
+            result = {"success": True, "filename_base": unique_title}
             if show_audio_info:
                 requested = info.get("requested_downloads") or []
                 audio_info = requested[0] if requested else info
                 codec = audio_info.get("acodec") or info.get("acodec") or "unknown"
                 abr = audio_info.get("abr") or info.get("abr")
                 ext = audio_info.get("ext") or info.get("ext") or "unknown"
-                print(f"音訊資訊: codec={codec}, ext={ext}, abr={abr if abr else 'N/A'} kbps")
-            print(f"下載完成！檔名: {unique_title}")
+                result["audio_info"] = {"codec": codec, "ext": ext, "abr": abr}
+                emit(f"音訊資訊: codec={codec}, ext={ext}, abr={abr if abr else 'N/A'} kbps")
+
+            emit(f"下載完成！檔名: {unique_title}")
+            return result
     except Exception as e:
-        print(f"錯誤: {e}")
+        emit(f"錯誤: {e}")
+        return {"success": False, "error": str(e)}
 
 
 if __name__ == "__main__":
     url = input("請輸入 YouTube URL: ").strip()
     mode = input(
-        "模式 1=原始最佳音質(推薦), 2=轉 MP3 320kbps, 3=優先 Opus + 顯示實際音訊資訊: "
+        "模式 1=原始最佳音質, 2=轉 MP3 320kbps(預設), 3=優先 Opus + 顯示實際音訊資訊 [Enter=2]: "
     ).strip()
+    if mode == "":
+        mode = "2"
 
     if mode == "2":
         download_youtube_music(url, keep_original=False, mp3_quality="320")

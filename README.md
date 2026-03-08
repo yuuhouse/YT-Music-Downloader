@@ -30,6 +30,11 @@ pip install yt-dlp
 python yt_music_dl.py
 ```
 
+## GUI 介面
+```bash
+python yt_music_gui.py
+```
+
 ## 輸出
 - 預設資料夾：`downloads/`
 
