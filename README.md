@@ -4,9 +4,6 @@
 
 YouTube 音訊下載工具（Python + `yt-dlp`）。
 
-## 實際執行畫面
-
-![Terminal Screenshot](assets/run-screenshot.svg)
 
 ## 功能
 - 下載 YouTube 最佳音訊
