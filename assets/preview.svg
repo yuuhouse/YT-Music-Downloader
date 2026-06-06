@@ -1,4 +1,4 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="YTDL Music Downloader latest GUI preview">
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="YT Music Downloader latest GUI preview">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#07112B" />
@@ -14,7 +14,7 @@
   <rect x="70" y="85" width="1060" height="460" rx="24" fill="#0C1938" stroke="#2B4D86" stroke-width="2" />
 
   <text x="120" y="180" fill="#F3F7FF" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="700">
-    YTDL Music Downloader
+    YT Music Downloader
   </text>
   <text x="120" y="230" fill="#8DB2EB" font-family="Segoe UI, Arial, sans-serif" font-size="28">
     Best audio • MP3 320 • Opus info • FLAC • Auto rename

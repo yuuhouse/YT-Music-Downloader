@@ -9,7 +9,7 @@ from yt_music_dl import download_youtube_music, validate_youtube_url
 class YTDLApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("YTDL Music Downloader")
+        self.root.title("YT Music Downloader")
         self.root.geometry("1200x700")
         self.root.minsize(980, 620)
 
@@ -91,7 +91,7 @@ class YTDLApp:
 
         tk.Label(
             left,
-            text="YTDL Music Downloader",
+            text="YT Music Downloader",
             fg=self.text_main,
             bg=self.card_bg,
             font=("Segoe UI", 40, "bold"),

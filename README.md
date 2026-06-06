@@ -1,4 +1,4 @@
-﻿# YTDL Music Downloader
+﻿# YT Music Downloader
 
 ![Project Preview](assets/preview.svg)
 
